@@ -4,9 +4,14 @@
       "title": "tutorial",
       "dataset": [
         {
-          "content_title": "Introduction to something",
+          "content_title": "Introduction to Could Computing in Education",
           "description": "good morning",
-          "content": "ABUuidiwhdiwhe"
+          "content": "Technology advancements have always had an important impact on industry development, affecting even the most traditional systems such as education. Following the general change of people’s habits and the world’s job market structure, the education sector has gone through a large-scale transformation over the last few years. \n  A set of turbulences in the education sector was triggered by the emergence of cloud computing technology, which took the worldwide classrooms by storm and reshaped most of the processes related to learning, teaching and administration. Cloud computing has remained one of the most talked-about trends of the decade due to its potential to facilitate information access, improve collaboration and reinvent traditional IT structures. \n  Some of the universities such as University of Western Australia and University of Chicago have implemented AWS cloud computing in their education system There are some platform such as Coursera who collaborates with Stanford, Duke, Princeton, the London School of Economics and other institutions to offer free online classes. \n  Through this tutorial, you will learn how to use AWS cloud computing to make your learning process ease."
+        },
+        {
+          "content_title": "Register an account",
+          "description": "This tutorial will tell you how to register an account",
+          "content": "edit this with https://aws.amazon.com/education/awseducate/apply/"
         }
       ]
     },
