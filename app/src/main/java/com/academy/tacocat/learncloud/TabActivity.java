@@ -137,6 +137,7 @@ public class TabActivity extends AppCompatActivity {
                 View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
                 TextView textView = rootView.findViewById(R.id.section_label);
                 textView.setText(documents.section.get(getArguments().getInt(ARG_SECTION_NUMBER)).title);
+                textView.setText(documents.section.get(getArguments().getInt(ARG_SECTION_NUMBER)).dataset.get(0).);
 
                 return rootView;
             } catch (IOException e) {
