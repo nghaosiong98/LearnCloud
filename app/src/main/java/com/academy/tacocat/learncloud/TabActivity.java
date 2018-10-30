@@ -1,8 +1,11 @@
 package com.academy.tacocat.learncloud;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,13 +14,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -25,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
+import java.util.Objects;
 
 public class TabActivity extends AppCompatActivity {
 
@@ -101,6 +111,8 @@ public class TabActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+        private static final String TAG = PlaceholderFragment.class.getName();
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -125,24 +137,31 @@ public class TabActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            try {
-                // Read JSON file
-                InputStream inputStream = getContext().getAssets().open("documents.json");
-                Reader reader = new InputStreamReader(inputStream, "UTF-8");
 
-                // Assign JSON to objects
-                Documents documents = new Gson().fromJson(reader, Documents.class);
+            // Assign JSON to objects
+            Documents documents = Controller.createDocument(getContext());
 
-                // Populate the view
-                View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
-                TextView textView = rootView.findViewById(R.id.section_label);
-                textView.setText(documents.section.get(getArguments().getInt(ARG_SECTION_NUMBER)).title);
+            assert getArguments() != null;
+            final int section_position = getArguments().getInt(ARG_SECTION_NUMBER);
+            Log.d(TAG, "onCreateView: " + section_position);
+            Section section = documents.section.get(section_position);
 
-                return rootView;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            DocumentAdapter documentAdapter = new DocumentAdapter(getContext(), R.layout.activity_list, section.dataset);
+            View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
+            ListView listView = rootView.findViewById(R.id.list_item);
+            listView.setAdapter(documentAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(getContext(), "Hii " + i, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), ContentActivity.class);
+                    intent.putExtra("section_value", section_position);
+                    intent.putExtra("item_value", i);
+                    startActivity(intent);
+                }
+            });
+            // Populate the view
+            return rootView;
         }
     }
 
@@ -151,6 +170,7 @@ public class TabActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private final String TAG = SectionsPagerAdapter.class.getSimpleName();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -160,6 +180,7 @@ public class TabActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Log.d(TAG, "getItem: " + position);
             return PlaceholderFragment.newInstance(position);
         }
 

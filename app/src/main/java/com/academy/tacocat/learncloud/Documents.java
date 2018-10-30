@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Documents {
     public List<Section> section = new ArrayList<>();
-
 }
 class Section{
     public String title;
