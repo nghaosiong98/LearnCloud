@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class Controller {
+
     public static Documents createDocument(Context context){
         try {
             InputStream inputStream = context.getAssets().open("documents.json");

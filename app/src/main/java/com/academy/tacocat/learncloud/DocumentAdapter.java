@@ -10,26 +10,23 @@ import android.widget.TextView;
 import java.util.List;
 
 public class DocumentAdapter extends ArrayAdapter<Dataset> {
-    private int resourceLayout;
-    private Context mContext;
 
-    public DocumentAdapter(Context context, int resource, List<Dataset> items) {
-        super(context, resource, items);
-        this.resourceLayout = resource;
-        this.mContext = context;
+    public DocumentAdapter(Context context, List<Dataset> datasets) {
+        super(context, 0, datasets);
+
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.tutorial_list, parent, false);
         }
 
-        Dataset p = getItem(position);
-        TextView textView = convertView.findViewById(R.id.list_text_title);
-        TextView textView1 = convertView.findViewById(R.id.list_text_desc);
-        textView.setText(p.content_title);
-        textView1.setText(p.description);
+        Dataset dataset = getItem(position);
+        TextView content_title = convertView.findViewById(R.id.content_title);
+        TextView description = convertView.findViewById(R.id.description);
+        content_title.setText(dataset.content_title);
+        description.setText(dataset.description);
 
         return convertView;
     }
